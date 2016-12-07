@@ -17,7 +17,9 @@
     "IdentityServer4": "1.0.0-rc4-update1"
   },
 
-  "tools": {
+   "tools": {
+    "BundlerMinifier.Core": "2.0.238",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
   },
 
@@ -30,7 +32,7 @@
     }
   },
 
-  "buildOptions": {
+    "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true
   },
@@ -44,6 +46,8 @@
   "publishOptions": {
     "include": [
       "wwwroot",
+      "**/*.cshtml",
+      "appsettings.json",
       "web.config"
     ]
   },
