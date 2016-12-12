@@ -33,7 +33,7 @@ namespace IdentityServer4Demo
             {
                 new Client
                 {
-                    ClientId = "implicit",
+                    ClientId = "code",
                     ClientName = "Code",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
