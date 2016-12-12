@@ -39,7 +39,8 @@ namespace IdentityServer4Demo
                     RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
-                    AllowedScopes = { "openid", "profile", "email", "address", "phone" }
+                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
+                    AllowAccessTokensViaBrowser = true
                 }
             };
         }
