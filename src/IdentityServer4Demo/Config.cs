@@ -33,12 +33,12 @@ namespace IdentityServer4Demo
             {
                 new Client
                 {
-                    ClientId = "code",
+                    ClientId = "code_id_token",
                     ClientName = "Code",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
 
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = { "openid", "profile", "email", "address", "phone" }
                 }
             };
