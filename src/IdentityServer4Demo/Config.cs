@@ -20,7 +20,10 @@ namespace IdentityServer4Demo
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResources.Phone(),
+                new IdentityResources.Address()
             };
         }
 
@@ -30,23 +33,15 @@ namespace IdentityServer4Demo
             {
                 new Client
                 {
-                    ClientId = "client",
-                    ClientSecrets = { new Secret("secret".Sha256() )},
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api1" }
-                },
-
-                new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "MVC application",
+                    ClientId = "implicit",
+                    ClientName = "Conformance : Implicit",
 
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    RedirectUris = { "http://localhost:5001/signin-oidc" },
+                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
 
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
+                    AllowAccessTokensViaBrowser = true,
                 }
             };
         }
