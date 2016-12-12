@@ -10,6 +10,7 @@
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "Microsoft.AspNetCore.StaticFiles": "1.1.0",
     "Microsoft.AspNetCore.Authentication.Google": "1.1.0",
+    "Microsoft.AspNetCore.AzureAppServicesIntegration": "1.0.0",
     "Serilog.Sinks.Literate": "2.0.0",
     "IdentityServer4": "1.0.0-rc5",
     "BundlerMinifier.Core": "2.2.306",
