@@ -33,15 +33,35 @@ namespace IdentityServer4Demo
             {
                 new Client
                 {
-                    ClientId = "code_id_token",
-                    ClientName = "Code",
+                    ClientId = "implicit",
+                    ClientName = "Implicit",
+                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
+                    AllowAccessTokensViaBrowser = true
+                },
+                new Client
+                {
+                    ClientId = "hybrid",
+                    ClientName = "Hybrid",
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = { "openid", "profile", "email", "address", "phone" },
                     AllowAccessTokensViaBrowser = true
-                }
+                },
+                new Client
+                {
+                    ClientId = "code",
+                    ClientName = "Code",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
+                },
             };
         }
 
@@ -57,9 +77,9 @@ namespace IdentityServer4Demo
 
                     Claims =
                     {
-                        new Claim("name", "Bob Smith")
+                        new Claim("name", "Bob Smith"),
+                        new Claim("email", "Bob@Smith.me"),
                     }
-
                 }
             };
         }
