@@ -11,7 +11,7 @@ namespace IdentityServer4Demo
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API #1")
+                new ApiResource("api", "Demo API")
             };
         }
 
@@ -22,8 +22,6 @@ namespace IdentityServer4Demo
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
-                new IdentityResources.Phone(),
-                new IdentityResources.Address()
             };
         }
 
@@ -33,35 +31,17 @@ namespace IdentityServer4Demo
             {
                 new Client
                 {
-                    ClientId = "implicit",
-                    ClientName = "Implicit",
-                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
+                    ClientId = "native",
+                    ClientName = "Native Client",
+                    RedirectUris = { "https://notused" },
 
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
-                    AllowAccessTokensViaBrowser = true
-                },
-                new Client
-                {
-                    ClientId = "hybrid",
-                    ClientName = "Hybrid",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
-                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
-                    AllowAccessTokensViaBrowser = true
-                },
-                new Client
-                {
-                    ClientId = "code",
-                    ClientName = "Code",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RedirectUris = { "https://op.certification.openid.net:60784/authz_cb" },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = { "openid", "profile", "email", "address", "phone" },
-                },
+                    RequirePkce = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+                    AllowOfflineAccess = true
+                }
             };
         }
 

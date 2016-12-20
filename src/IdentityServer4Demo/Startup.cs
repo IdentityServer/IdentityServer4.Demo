@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using IdentityServer4;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,8 @@ namespace IdentityServer4Demo
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddInMemoryUsers(Config.GetUsers());
+
+            services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
