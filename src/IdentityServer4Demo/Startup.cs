@@ -1,8 +1,10 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System.Linq;
 
 namespace IdentityServer4Demo
 {
@@ -12,8 +14,10 @@ namespace IdentityServer4Demo
         {
             services.AddMvc();
 
+            var cert = X509.CurrentUser.My.Thumbprint.Find("98D3ACF057299C3745044BE918986AD7ED0AD4A2", validOnly: false).FirstOrDefault();
+
             services.AddIdentityServer()
-                .AddTemporarySigningCredential()
+                .AddSigningCredential(cert)
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
