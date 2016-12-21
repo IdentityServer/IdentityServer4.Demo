@@ -2,6 +2,7 @@
 using IdentityServer4;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -11,20 +12,34 @@ namespace IdentityServer4Demo
 {
     public class Startup
     {
+        private readonly IHostingEnvironment _env;
+
+        public Startup(IHostingEnvironment env)
+        {
+            _env = env;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
-            var cert = X509.CurrentUser.My.Thumbprint.Find("98D3ACF057299C3745044BE918986AD7ED0AD4A2", validOnly: false).FirstOrDefault();
-
-            services.AddIdentityServer()
-                .AddSigningCredential(cert)
+            var builder = services.AddIdentityServer()
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddInMemoryUsers(Config.GetUsers());
 
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
+
+            if (_env.IsDevelopment())
+            {
+                builder.AddTemporarySigningCredential();
+            }
+            else
+            {
+                var cert = X509.CurrentUser.My.Thumbprint.Find("98D3ACF057299C3745044BE918986AD7ED0AD4A2", validOnly: false).FirstOrDefault();
+                builder.AddSigningCredential(cert);
+            }
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
