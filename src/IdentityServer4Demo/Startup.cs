@@ -1,5 +1,6 @@
 ﻿using IdentityModel;
 using IdentityServer4;
+using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,7 @@ namespace IdentityServer4Demo
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddInMemoryUsers(Config.GetUsers());
+                .AddTestUsers(TestUsers.Users);
 
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
 

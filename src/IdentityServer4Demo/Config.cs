@@ -1,5 +1,5 @@
 ﻿using IdentityServer4.Models;
-using IdentityServer4.Services.InMemory;
+using IdentityServer4.Test;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -110,25 +110,6 @@ namespace IdentityServer4Demo
                     
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                }
-            };
-        }
-
-        public static List<InMemoryUser> GetUsers()
-        {
-            return new List<InMemoryUser>
-            {
-                new InMemoryUser
-                {
-                    Subject = "1",
-                    Username = "bob",
-                    Password = "bob",
-
-                    Claims =
-                    {
-                        new Claim("name", "Bob Smith"),
-                        new Claim("email", "Bob@Smith.me"),
-                    }
                 }
             };
         }
