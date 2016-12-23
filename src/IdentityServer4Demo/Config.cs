@@ -1,20 +1,10 @@
 ﻿using IdentityServer4.Models;
-using IdentityServer4.Test;
 using System.Collections.Generic;
-using System.Security.Claims;
 
 namespace IdentityServer4Demo
 {
     public class Config
     {
-        public static IEnumerable<ApiResource> GetApis()
-        {
-            return new List<ApiResource>
-            {
-                new ApiResource("api", "Demo API")
-            };
-        }
-
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
@@ -22,6 +12,14 @@ namespace IdentityServer4Demo
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
+            };
+        }
+
+        public static IEnumerable<ApiResource> GetApis()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("api", "Demo API")
             };
         }
 

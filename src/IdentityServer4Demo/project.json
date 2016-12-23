@@ -15,7 +15,8 @@
     "BundlerMinifier.Core": "2.2.306",
     "Serilog.Extensions.Logging": "1.3.1",
 
-    "IdentityServer4": "1.0.0"
+    "IdentityServer4": "1.0.0",
+    "IdentityServer4.AccessTokenValidation": "1.0.1"
   },
 
    "tools": {

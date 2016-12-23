@@ -54,6 +54,19 @@ namespace IdentityServer4Demo
             loggerFactory.AddSerilog(serilog);
             app.UseDeveloperExceptionPage();
 
+            app.Map("/api", apiApp =>
+            {
+                app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+                {
+                    Authority = "https://identityserver4demo.azurewebsites.net",
+
+                    ApiName = "api",
+                    ApiSecret = "secret"
+                });
+
+                app.UseMvc();
+            });
+
             app.UseIdentityServer();
 
             // cookie middleware for temporarily storing the outcome of the external authentication
