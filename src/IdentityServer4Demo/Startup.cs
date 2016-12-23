@@ -56,7 +56,7 @@ namespace IdentityServer4Demo
 
             app.Map("/api", apiApp =>
             {
-                app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+                apiApp.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
                 {
                     Authority = "https://demo.identityserver.io",
                     AutomaticChallenge = false,
@@ -64,7 +64,7 @@ namespace IdentityServer4Demo
                     ApiName = "api"
                 });
 
-                app.UseMvc();
+                apiApp.UseMvc();
             });
 
             app.UseIdentityServer();
