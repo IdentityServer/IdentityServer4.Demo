@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace IdentityServer4Demo.Api
 {
-    [Route("api/test")]
+    [Route("test")]
     [Authorize(ActiveAuthenticationSchemes = "Bearer")]
     public class TestController : ControllerBase
     {
         public IActionResult Get()
         {
-            return new JsonResult(new { ok = "ok" });
+            var claims = User.Claims.Select(c => new { c.Type, c.Value });
+            return new JsonResult(claims);
         }
     }
 }

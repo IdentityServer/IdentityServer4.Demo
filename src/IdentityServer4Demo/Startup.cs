@@ -59,7 +59,6 @@ namespace IdentityServer4Demo
                 apiApp.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
                 {
                     Authority = "https://demo.identityserver.io",
-                    AutomaticChallenge = false,
 
                     ApiName = "api"
                 });
