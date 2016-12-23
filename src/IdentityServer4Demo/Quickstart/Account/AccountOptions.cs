@@ -15,7 +15,7 @@ namespace IdentityServer4.Quickstart.UI
         public static bool ShowLogoutPrompt = true;
         public static bool AutomaticRedirectAfterSignOut = false;
 
-        public static bool WindowsAuthenticationEnabled = true;
+        public static bool WindowsAuthenticationEnabled = false;
         // specify the Windows authentication schemes you want to use for authentication
         public static readonly string[] WindowsAuthenticationSchemes = new string[] { "Negotiate", "NTLM" };
         public static readonly string WindowsAuthenticationDisplayName = "Windows";
