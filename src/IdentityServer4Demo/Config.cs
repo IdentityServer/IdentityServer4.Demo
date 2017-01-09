@@ -102,6 +102,7 @@ namespace IdentityServer4Demo
                 {
                     ClientId = "implicit",
                     ClientName = "Implicit Client",
+                    AllowAccessTokensViaBrowser = true,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
