@@ -106,10 +106,42 @@ namespace IdentityServer4Demo
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
-                    
+
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                }
+                },
+
+                // implicit using reference tokens (e.g. SPA or OIDC authentication)
+                new Client
+                {
+                    ClientId = "implicit.reference",
+                    ClientName = "Implicit Client using reference tokens",
+                    AllowAccessTokensViaBrowser = true,
+
+                    AccessTokenType = AccessTokenType.Reference,
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+                },
+
+                // implicit using reference tokens (e.g. SPA or OIDC authentication)
+                new Client
+                {
+                    ClientId = "implicit.shortlived",
+                    ClientName = "Implicit Client using short-lived tokens",
+                    AllowAccessTokensViaBrowser = true,
+
+                    AccessTokenLifetime = 70,
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+                },
             };
         }
     }
