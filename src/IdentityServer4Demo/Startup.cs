@@ -1,6 +1,7 @@
 ﻿using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Quickstart.UI;
+using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace IdentityServer4Demo
                 .AddTestUsers(TestUsers.Users);
 
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
+            services.AddTransient<ICorsPolicyService, DemoCorsPolicy>();
 
             if (_env.IsDevelopment())
             {
