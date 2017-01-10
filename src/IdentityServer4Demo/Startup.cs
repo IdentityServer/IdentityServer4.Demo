@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServer4Demo
 {
@@ -40,8 +41,7 @@ namespace IdentityServer4Demo
             }
             else
             {
-                var cert = X509.CurrentUser.My.Thumbprint.Find("98D3ACF057299C3745044BE918986AD7ED0AD4A2", validOnly: false).FirstOrDefault();
-                builder.AddSigningCredential(cert);
+                builder.AddSigningCredential("98D3ACF057299C3745044BE918986AD7ED0AD4A2", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
             }
         }
 
