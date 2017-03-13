@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace IdentityServer4Demo.Api
 {
-    [Route("test")]
+    [Route("/api/test")]
     [Authorize(ActiveAuthenticationSchemes = "Bearer")]
     public class TestController : ControllerBase
     {

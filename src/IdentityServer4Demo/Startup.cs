@@ -1,5 +1,4 @@
-﻿using IdentityModel;
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServer4Demo
@@ -17,9 +15,20 @@ namespace IdentityServer4Demo
     {
         private readonly IHostingEnvironment _env;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             _env = env;
+
+            if (_env.IsDevelopment())
+            {
+                var serilog = new LoggerConfiguration()
+                    .MinimumLevel.Information()
+                    .Enrich.FromLogContext()
+                    .WriteTo.LiterateConsole(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}{NewLine}")
+                    .CreateLogger();
+
+                loggerFactory.AddSerilog(serilog);
+            }
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -32,6 +41,7 @@ namespace IdentityServer4Demo
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(TestUsers.Users);
 
+            // demo versions
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
             services.AddTransient<ICorsPolicyService, DemoCorsPolicy>();
 
@@ -47,20 +57,17 @@ namespace IdentityServer4Demo
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            var serilog = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .Enrich.FromLogContext()
-                .WriteTo.LiterateConsole(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}{NewLine}")
-                .CreateLogger();
-
-            loggerFactory.AddSerilog(serilog);
-            app.UseDeveloperExceptionPage();
+            if (_env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.Map("/api", apiApp =>
             {
                 apiApp.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
                 {
                     Authority = "https://demo.identityserver.io",
+                    AutomaticAuthenticate = true,
 
                     ApiName = "api"
                 });
@@ -69,14 +76,6 @@ namespace IdentityServer4Demo
             });
 
             app.UseIdentityServer();
-
-            // cookie middleware for temporarily storing the outcome of the external authentication
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme,
-                AutomaticAuthenticate = false,
-                AutomaticChallenge = false
-            });
 
             // middleware for google authentication
             app.UseGoogleAuthentication(new GoogleOptions
