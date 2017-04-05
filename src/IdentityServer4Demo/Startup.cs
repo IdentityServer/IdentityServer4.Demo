@@ -51,13 +51,13 @@ namespace IdentityServer4Demo
             }
             else
             {
-                builder.AddSigningCredential("6B7ACC520305BFDB4F7252DAEB2177CC091FAAE1", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
+                builder.AddSigningCredential("98D3ACF057299C3745044BE918986AD7ED0AD4A2", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
             }
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            if (_env.IsDevelopment())
+            //if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
