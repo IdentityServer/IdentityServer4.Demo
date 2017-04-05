@@ -51,7 +51,8 @@ namespace IdentityServer4Demo
             }
             else
             {
-                builder.AddSigningCredential("6B7ACC520305BFDB4F7252DAEB2177CC091FAAE1", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
+                builder.AddTemporarySigningCredential();
+                //builder.AddSigningCredential("6B7ACC520305BFDB4F7252DAEB2177CC091FAAE1", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
             }
         }
 
