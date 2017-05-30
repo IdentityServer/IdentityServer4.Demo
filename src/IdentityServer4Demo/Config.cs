@@ -20,6 +20,9 @@ namespace IdentityServer4Demo
             return new List<ApiResource>
             {
                 new ApiResource("api", "Demo API")
+                {
+                    ApiSecrets = { new Secret("secret".Sha256()) }
+                }
             };
         }
 
