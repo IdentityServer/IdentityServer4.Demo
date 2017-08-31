@@ -109,6 +109,7 @@ namespace IdentityServer4Demo
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
+                    LogoutUri = "http://localhost:5000/signout-idsrv", // for testing identityserver on localhost
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
