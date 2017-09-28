@@ -50,7 +50,7 @@ namespace IdentityServer4.Quickstart.UI
                     var scopes = model.ScopesConsented;
                     if (ConsentOptions.EnableOfflineAccess == false)
                     {
-                        scopes = scopes.Where(x => x != IdentityServerConstants.StandardScopes.OfflineAccess);
+                        scopes = scopes.Where(x => x != IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess);
                     }
 
                     grantedConsent = new ConsentResponse
@@ -61,7 +61,7 @@ namespace IdentityServer4.Quickstart.UI
                 }
                 else
                 {
-                    result.ValidationError = ConsentOptions.MuchChooseOneErrorMessage;
+                    result.ValidationError = ConsentOptions.MustChooseOneErrorMessage;
                 }
             }
             else
@@ -73,12 +73,12 @@ namespace IdentityServer4.Quickstart.UI
             {
                 // validate return url is still valid
                 var request = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
-                if (result == null) return result;
+                if (request == null) return result;
 
                 // communicate outcome of consent back to identityserver
                 await _interaction.GrantConsentAsync(request, grantedConsent);
 
-                // indiate that's it ok to redirect back to authorization endpoint
+                // indicate that's it ok to redirect back to authorization endpoint
                 result.RedirectUri = model.ReturnUrl;
             }
             else
@@ -132,7 +132,7 @@ namespace IdentityServer4.Quickstart.UI
 
             vm.ReturnUrl = returnUrl;
 
-            vm.ClientName = client.ClientName;
+            vm.ClientName = client.ClientName ?? client.ClientId;
             vm.ClientUrl = client.ClientUri;
             vm.ClientLogoUrl = client.LogoUri;
             vm.AllowRememberConsent = client.AllowRememberConsent;
@@ -142,7 +142,7 @@ namespace IdentityServer4.Quickstart.UI
             if (ConsentOptions.EnableOfflineAccess && resources.OfflineAccess)
             {
                 vm.ResourceScopes = vm.ResourceScopes.Union(new ScopeViewModel[] {
-                    GetOfflineAccessScope(vm.ScopesConsented.Contains(IdentityServerConstants.StandardScopes.OfflineAccess) || model == null)
+                    GetOfflineAccessScope(vm.ScopesConsented.Contains(IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess) || model == null)
                 });
             }
 
@@ -158,7 +158,7 @@ namespace IdentityServer4.Quickstart.UI
                 Description = identity.Description,
                 Emphasize = identity.Emphasize,
                 Required = identity.Required,
-                Checked = check || identity.Required,
+                Checked = check || identity.Required
             };
         }
 
@@ -171,7 +171,7 @@ namespace IdentityServer4.Quickstart.UI
                 Description = scope.Description,
                 Emphasize = scope.Emphasize,
                 Required = scope.Required,
-                Checked = check || scope.Required,
+                Checked = check || scope.Required
             };
         }
 
@@ -179,7 +179,7 @@ namespace IdentityServer4.Quickstart.UI
         {
             return new ScopeViewModel
             {
-                Name = IdentityServerConstants.StandardScopes.OfflineAccess,
+                Name = IdentityServer4.IdentityServerConstants.StandardScopes.OfflineAccess,
                 DisplayName = ConsentOptions.OfflineAccessDisplayName,
                 Description = ConsentOptions.OfflineAccessDescription,
                 Emphasize = true,

@@ -3,91 +3,44 @@ using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serilog;
-using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServer4Demo
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
-
-        public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            _env = env;
-
-            if (_env.IsDevelopment())
-            {
-                var serilog = new LoggerConfiguration()
-                    .MinimumLevel.Information()
-                    .Enrich.FromLogContext()
-                    .WriteTo.LiterateConsole(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message}{NewLine}{Exception}{NewLine}")
-                    .CreateLogger();
-
-                loggerFactory.AddSerilog(serilog);
-            }
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
 
-            var builder = services.AddIdentityServer()
+            services.AddIdentityServer()
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(TestUsers.Users);
+                .AddTestUsers(TestUsers.Users)
+                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey());
+
+            services.AddAuthentication()
+                .AddGoogle("Google", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    options.ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com";
+                    options.ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh";
+                });
 
             // demo versions
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
             services.AddTransient<ICorsPolicyService, DemoCorsPolicy>();
-
-            if (_env.IsDevelopment())
-            {
-                builder.AddTemporarySigningCredential();
-            }
-            else
-            {
-                builder.AddTemporarySigningCredential();
-                //builder.AddSigningCredential("6B7ACC520305BFDB4F7252DAEB2177CC091FAAE1", StoreLocation.CurrentUser, nameType: NameType.Thumbprint);
-            }
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            //if (_env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.Map("/api", apiApp =>
-            {
-                apiApp.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
-                {
-                    Authority = "https://demo.identityserver.io",
-                    AutomaticAuthenticate = true,
-
-                    ApiName = "api"
-                });
-
-                apiApp.UseMvc();
-            });
-
-            app.UseIdentityServer();
-
-            // middleware for google authentication
-            app.UseGoogleAuthentication(new GoogleOptions
-            {
-                AuthenticationScheme = "Google",
-                SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme,
-                ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com",
-                ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh"
-            });
-
+            app.UseDeveloperExceptionPage();
+            
             app.UseStaticFiles();
+            app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
         }
     }
