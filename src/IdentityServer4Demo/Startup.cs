@@ -37,7 +37,15 @@ namespace IdentityServer4Demo
                     options.ApiName = "api";
                     options.ApiSecret = "secret";
                 });
-                
+
+            // add CORS policy for non-IdentityServer endpoints
+            services.AddCors(options =>
+            {
+                options.AddPolicy("api", policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
 
             // demo versions
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
@@ -47,6 +55,8 @@ namespace IdentityServer4Demo
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
+            app.UseCors("api");
             
             app.UseStaticFiles();
             app.UseIdentityServer();
