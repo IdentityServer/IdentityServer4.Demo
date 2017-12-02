@@ -14,7 +14,7 @@ namespace IdentityServer4Demo
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var cert = new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "idsrvtest.pfx"), "idsrv3test");
+            var cert = new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "idsrvtest.pfx"), "idsrv3test", X509KeyStorageFlags.MachineKeySet);
 
             services.AddMvc();
 
