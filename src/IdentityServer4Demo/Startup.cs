@@ -5,8 +5,6 @@ using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServer4Demo
 {
@@ -14,8 +12,6 @@ namespace IdentityServer4Demo
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var cert = new X509Certificate2(Path.Combine(Directory.GetCurrentDirectory(), "idsrvtest.pfx"), "idsrv3test", X509KeyStorageFlags.MachineKeySet);
-
             services.AddMvc();
 
             services.AddIdentityServer()
@@ -23,7 +19,7 @@ namespace IdentityServer4Demo
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(TestUsers.Users)
-                .AddSigningCredential(cert);
+                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey());
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
