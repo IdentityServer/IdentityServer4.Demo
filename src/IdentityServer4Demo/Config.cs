@@ -44,7 +44,9 @@ namespace IdentityServer4Demo
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RequirePkce = true,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                    AllowOfflineAccess = true
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 },
                 new Client
                 {
@@ -58,7 +60,9 @@ namespace IdentityServer4Demo
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                    AllowOfflineAccess = true
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 },
                 new Client
                 {
@@ -73,7 +77,9 @@ namespace IdentityServer4Demo
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                    AllowOfflineAccess = true
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 },
                 new Client
                 {
@@ -87,7 +93,9 @@ namespace IdentityServer4Demo
 
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                    AllowOfflineAccess = true
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 },
 
                 // server to server
@@ -145,7 +153,7 @@ namespace IdentityServer4Demo
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
-                },
+                }
             };
         }
     }
