@@ -19,7 +19,7 @@ namespace IdentityServer4Demo
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(TestUsers.Users)
-                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey());
+                .AddDeveloperSigningCredential(persistKey: false);
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
