@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using Datalust.SerilogMiddlewareExample.Diagnostics;
+using IdentityServer4;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
@@ -56,7 +57,9 @@ namespace IdentityServer4Demo
             app.UseDeveloperExceptionPage();
 
             app.UseCors("api");
-            
+
+            app.UseMiddleware<SerilogMiddleware>
+
             app.UseStaticFiles();
             app.UseIdentityServer();
             app.UseMvcWithDefaultRoute();
