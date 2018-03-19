@@ -40,12 +40,6 @@ namespace IdentityServer4Demo
                                 shared: true,
                                 flushToDiskInterval: TimeSpan.FromSeconds(1));
                         }
-
-                        var key = ctx.Configuration["AI_KEY"];
-                        if (!string.IsNullOrWhiteSpace(key))
-                        {
-                            config.WriteTo.ApplicationInsightsTraces(key);
-                        }
                     })
                     .Build();
         }
