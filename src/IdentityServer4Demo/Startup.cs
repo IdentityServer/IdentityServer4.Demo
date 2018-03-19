@@ -58,7 +58,7 @@ namespace IdentityServer4Demo
 
             app.UseCors("api");
 
-            app.UseMiddleware<SerilogMiddleware>
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseStaticFiles();
             app.UseIdentityServer();
