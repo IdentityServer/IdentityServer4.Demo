@@ -15,7 +15,13 @@ namespace IdentityServer4Demo
         {
             services.AddMvc();
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+            })
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
