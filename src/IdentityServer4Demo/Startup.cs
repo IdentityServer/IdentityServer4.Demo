@@ -5,12 +5,20 @@ using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentityServer4Demo
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -33,8 +41,8 @@ namespace IdentityServer4Demo
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-                    options.ClientId = "708996912208-9m4dkjb5hscn7cjrn5u0r4tbgkbj1fko.apps.googleusercontent.com";
-                    options.ClientSecret = "wdfPY6t8H8cecgjlxud__4Gh";
+                    options.ClientId = Configuration["Secret--GoogleClientId"];
+                    options.ClientSecret = Configuration["Secret--GoogleClientSecret"];
                 })
                 .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
                 {
@@ -53,7 +61,7 @@ namespace IdentityServer4Demo
                 });
             });
 
-            // demo versions
+            // demo versions (never use in production)
             services.AddTransient<IRedirectUriValidator, DemoRedirectValidator>();
             services.AddTransient<ICorsPolicyService, DemoCorsPolicy>();
         }
