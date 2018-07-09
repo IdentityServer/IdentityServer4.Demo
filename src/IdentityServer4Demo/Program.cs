@@ -12,10 +12,10 @@ namespace IdentityServer4Demo
         {
             Console.Title = "IdentityServer";
 
-            BuildWebHost(args).Run();
+            BuildWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args)
+        public static IWebHostBuilder BuildWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
                     .UseStartup<Startup>()
@@ -40,8 +40,7 @@ namespace IdentityServer4Demo
                                 shared: true,
                                 flushToDiskInterval: TimeSpan.FromSeconds(1));
                         }
-                    })
-                    .Build();
+                    });
         }
     }
 }
