@@ -153,6 +153,18 @@ namespace IdentityServer4Demo
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
+                },
+                // device flow
+                new Client
+                {
+                    ClientId = "device",
+                    ClientName = "Device Flow Client",
+
+                    AllowedGrantTypes = GrantTypes.DeviceFlow,
+                    RequireClientSecret = false,
+
+                    AllowOfflineAccess = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" }
                 }
             };
         }
