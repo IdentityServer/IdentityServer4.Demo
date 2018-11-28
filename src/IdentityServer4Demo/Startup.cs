@@ -75,6 +75,9 @@ namespace IdentityServer4Demo
                     options.ApiSecret = "secret";
                 });
 
+            // preserve OIDC state in cache (solves problems with AAD and URL lenghts)
+            services.AddOidcStateDataFormatterCache("aad");
+
             // add CORS policy for non-IdentityServer endpoints
             services.AddCors(options =>
             {
