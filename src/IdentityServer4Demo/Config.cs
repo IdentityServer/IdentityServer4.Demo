@@ -108,6 +108,22 @@ namespace IdentityServer4Demo
                     AllowedScopes = { "api" },
                 },
 
+                // SPA per new security guidance
+                new Client
+                {
+                    ClientId = "spa",
+                    ClientName = "SPA (Code + PKCE)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
+                },
+
                 // implicit (e.g. SPA or OIDC authentication)
                 new Client
                 {
