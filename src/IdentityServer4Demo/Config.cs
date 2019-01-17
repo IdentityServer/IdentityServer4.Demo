@@ -114,6 +114,8 @@ namespace IdentityServer4Demo
                     ClientId = "spa",
                     ClientName = "SPA (Code + PKCE)",
 
+                    RequireClientSecret = false,
+
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
 
