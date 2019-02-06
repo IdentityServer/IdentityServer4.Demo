@@ -66,6 +66,23 @@ namespace IdentityServer4Demo
                 },
                 new Client
                 {
+                    ClientId = "server.hybrid.short",
+                    ClientName = "Server-based Client (Hybrid)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AccessTokenLifetime = 70,
+                },
+                new Client
+                {
                     ClientId = "native.code",
                     ClientName = "Native Client (Code with PKCE)",
 
