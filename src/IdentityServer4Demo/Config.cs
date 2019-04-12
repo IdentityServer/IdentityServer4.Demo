@@ -142,6 +142,23 @@ namespace IdentityServer4Demo
                     AllowOfflineAccess = true,
                     RefreshTokenUsage = TokenUsage.ReUse
                 },
+                new Client
+                {
+                    ClientId = "spa.short",
+                    ClientName = "SPA (Code + PKCE)",
+
+                    RequireClientSecret = false,
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    AccessTokenLifetime = 70
+                },
 
                 // implicit (e.g. SPA or OIDC authentication)
                 new Client
