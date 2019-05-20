@@ -40,6 +40,7 @@ namespace IdentityServer4Demo
                     PostLogoutRedirectUris = { "https://notused" },
 
                     RequireClientSecret = false,
+                    RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     RequirePkce = true,
@@ -57,6 +58,7 @@ namespace IdentityServer4Demo
                     PostLogoutRedirectUris = { "https://notused" },
 
                     ClientSecrets = { new Secret("secret".Sha256()) },
+                    RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = { "openid", "profile", "email", "api" },
@@ -73,6 +75,7 @@ namespace IdentityServer4Demo
                     PostLogoutRedirectUris = { "https://notused" },
 
                     ClientSecrets = { new Secret("secret".Sha256()) },
+                    RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = { "openid", "profile", "email", "api" },
@@ -90,6 +93,7 @@ namespace IdentityServer4Demo
                     PostLogoutRedirectUris = { "https://notused" },
 
                     RequireClientSecret = false,
+                    RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
@@ -107,6 +111,7 @@ namespace IdentityServer4Demo
                     PostLogoutRedirectUris = { "https://notused" },
 
                     ClientSecrets = { new Secret("secret".Sha256()) },
+                    RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes = { "openid", "profile", "email", "api" },
@@ -132,6 +137,7 @@ namespace IdentityServer4Demo
                     ClientName = "SPA (Code + PKCE)",
 
                     RequireClientSecret = false,
+                    RequireConsent = false,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
@@ -148,6 +154,7 @@ namespace IdentityServer4Demo
                     ClientName = "SPA (Code + PKCE)",
 
                     RequireClientSecret = false,
+                    RequireConsent = false,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
@@ -166,6 +173,7 @@ namespace IdentityServer4Demo
                     ClientId = "implicit",
                     ClientName = "Implicit Client",
                     AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
@@ -183,6 +191,7 @@ namespace IdentityServer4Demo
                     AllowAccessTokensViaBrowser = true,
 
                     AccessTokenType = AccessTokenType.Reference,
+                    RequireConsent = false,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
@@ -199,6 +208,7 @@ namespace IdentityServer4Demo
                     AllowAccessTokensViaBrowser = true,
 
                     AccessTokenLifetime = 70,
+                    RequireConsent = false,
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
