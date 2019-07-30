@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IdentityServer4;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using IdentityServer4.AccessTokenValidation;
 
 namespace IdentityServer4Demo.Api
 {
     [Route("/api/test")]
-    [Authorize(AuthenticationSchemes = IdentityServerAuthenticationDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = IdentityServerConstants.LocalApi.AuthenticationScheme)]
     public class TestController : ControllerBase
     {
         public IActionResult Get()

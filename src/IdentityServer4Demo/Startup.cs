@@ -1,6 +1,5 @@
 ﻿using Datalust.SerilogMiddlewareExample.Diagnostics;
 using IdentityServer4;
-using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
@@ -67,12 +66,9 @@ namespace IdentityServer4Demo
                         RoleClaimType = "role"
                     };
                 })
-                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme, options =>
+                .AddLocalApi(options =>
                 {
-                    options.Authority = "https://demo.identityserver.io";
-
-                    options.ApiName = "api";
-                    options.ApiSecret = "secret";
+                    options.ExpectedScope = "api";
                 });
 
             // preserve OIDC state in cache (solves problems with AAD and URL lenghts)
