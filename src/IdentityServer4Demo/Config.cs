@@ -105,7 +105,7 @@ namespace IdentityServer4Demo
                 new Client
                 {
                     ClientId = "server.code",
-                    ClientName = "Service Client (Code)",
+                    ClientName = "Server Client (Code)",
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
@@ -118,6 +118,24 @@ namespace IdentityServer4Demo
 
                     AllowOfflineAccess = true,
                     RefreshTokenUsage = TokenUsage.ReUse
+                },
+                new Client
+                {
+                    ClientId = "server.code.short",
+                    ClientName = "Server Client (Code)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    RequireConsent = false,
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AccessTokenLifetime = 70
                 },
 
                 // server to server
