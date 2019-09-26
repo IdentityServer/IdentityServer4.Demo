@@ -34,34 +34,41 @@
         <div class="col-sm-8">
             <p>
                 <b>client id: native.hybrid</b> <br />
-                grant type: hybrid with PKCE <br />
+                grant type: hybrid with PKCE and client credentials <br />
                 allowed scopes: openid profile email api offline_access
             </p>
 
             <p>
                 <b>client id: native.code</b> <br />
-                grant type: authorization code with PKCE <br />
+                grant type: authorization code with PKCE and client credentials<br />
                 allowed scopes: openid profile email api offline_access
             </p>
 
             <p>
                 <b>client id: server.hybrid</b> <br />
                 client secret: secret <br />
-                grant type: hybrid <br />
+                grant type: hybrid and client credentials<br />
                 allowed scopes: openid profile email api offline_access
             </p>
-            
+
             <p>
                 <b>client id: server.hybrid.short (access token lifetime of 70 seconds)</b> <br />
                 client secret: secret <br />
-                grant type: hybrid <br />
+                grant type: hybrid and client credentials<br />
                 allowed scopes: openid profile email api offline_access
             </p>
 
             <p>
                 <b>client id: server.code</b> <br />
                 client secret: secret <br />
-                grant type: authorization code <br />
+                grant type: authorization code and client credentials<br />
+                allowed scopes: openid profile email api offline_access
+            </p>
+
+            <p>
+                <b>client id: server.code.short (access token lifetime of 70 seconds)</b> <br />
+                client secret: secret <br />
+                grant type: authorization code and client credentials<br />
                 allowed scopes: openid profile email api offline_access
             </p>
 
