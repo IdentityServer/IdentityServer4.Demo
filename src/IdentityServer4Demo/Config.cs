@@ -60,7 +60,7 @@ namespace IdentityServer4Demo
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
-                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
@@ -77,7 +77,7 @@ namespace IdentityServer4Demo
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
-                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
@@ -95,7 +95,7 @@ namespace IdentityServer4Demo
                     RequireClientSecret = false,
                     RequireConsent = false,
 
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     RequirePkce = true,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
@@ -113,7 +113,7 @@ namespace IdentityServer4Demo
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
@@ -130,7 +130,7 @@ namespace IdentityServer4Demo
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
-                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                     AllowedScopes = { "openid", "profile", "email", "api" },
 
                     AllowOfflineAccess = true,
