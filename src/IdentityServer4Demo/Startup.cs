@@ -1,5 +1,4 @@
-﻿using Datalust.SerilogMiddlewareExample.Diagnostics;
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;

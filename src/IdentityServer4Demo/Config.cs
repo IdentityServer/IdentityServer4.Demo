@@ -52,13 +52,13 @@ namespace IdentityServer4Demo
 
                 new Client
                 {
-                    ClientId = "interactive",
+                    ClientId = "interactive.confidential",
                     ClientName = "Interactive client (Code with PKCE)",
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
 
-                    RequireClientSecret = false,
+                    ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
@@ -70,13 +70,13 @@ namespace IdentityServer4Demo
                 },
                 new Client
                 {
-                    ClientId = "interactive.short",
+                    ClientId = "interactive.confidential.short",
                     ClientName = "Interactive client with short token lifetime (Code with PKCE)",
 
                     RedirectUris = { "https://notused" },
                     PostLogoutRedirectUris = { "https://notused" },
 
-                    RequireClientSecret = false,
+                    ClientSecrets = { new Secret("secret".Sha256()) },
                     RequireConsent = false,
 
                     AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
@@ -86,6 +86,56 @@ namespace IdentityServer4Demo
                     AllowOfflineAccess = true,
                     RefreshTokenUsage = TokenUsage.ReUse,
                     AccessTokenLifetime = 75
+                },
+
+                new Client
+                {
+                    ClientId = "interactive.public",
+                    ClientName = "Interactive client (Code with PKCE)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    RequireClientSecret = false,
+                    RequireConsent = false,
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
+                },
+                new Client
+                {
+                    ClientId = "interactive.public.short",
+                    ClientName = "Interactive client with short token lifetime (Code with PKCE)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    RequireClientSecret = false,
+                    RequireConsent = false,
+
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AccessTokenLifetime = 75
+                },
+
+                new Client
+                {
+                    ClientId = "device",
+                    ClientName = "Device Flow Client",
+
+                    AllowedGrantTypes = GrantTypes.DeviceFlow,
+                    RequireClientSecret = false,
+
+                    AllowOfflineAccess = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" }
                 },
 
 
@@ -293,18 +343,6 @@ namespace IdentityServer4Demo
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api" },
                 },
-                // device flow
-                new Client
-                {
-                    ClientId = "device",
-                    ClientName = "Device Flow Client",
-
-                    AllowedGrantTypes = GrantTypes.DeviceFlow,
-                    RequireClientSecret = false,
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" }
-                }
             };
         }
     }
