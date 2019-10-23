@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace IdentityServer4Demo
 {
@@ -21,7 +22,7 @@ namespace IdentityServer4Demo
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddControllersWithViews();
 
             services.AddIdentityServer(options =>
             {
@@ -90,15 +91,21 @@ namespace IdentityServer4Demo
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSerilogRequestLogging();
             app.UseDeveloperExceptionPage();
 
             app.UseCors("api");
 
-            app.UseMiddleware<SerilogMiddleware>();
-
             app.UseStaticFiles();
+
+            app.UseRouting();
             app.UseIdentityServer();
-            app.UseMvcWithDefaultRoute();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
         }
     }
 }

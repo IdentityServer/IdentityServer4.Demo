@@ -30,7 +30,66 @@ namespace IdentityServer4Demo
         {
             return new List<Client>
             {
-                // native clients
+                new Client
+                {
+                    ClientId = "m2m",
+                    ClientName = "Machine to machine (client credentials)",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "api" },
+                },
+                new Client
+                {
+                    ClientId = "m2m.short",
+                    ClientName = "Machine to machine with short access token lifetime (client credentials)",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "api" },
+                    AccessTokenLifetime = 75
+                },
+
+                new Client
+                {
+                    ClientId = "interactive",
+                    ClientName = "Interactive client (Code with PKCE)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    RequireClientSecret = false,
+                    RequireConsent = false,
+
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    RequirePkce = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
+                },
+                new Client
+                {
+                    ClientId = "interactive.short",
+                    ClientName = "Interactive client with short token lifetime (Code with PKCE)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    RequireClientSecret = false,
+                    RequireConsent = false,
+
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    RequirePkce = true,
+                    AllowedScopes = { "openid", "profile", "email", "api" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    AccessTokenLifetime = 75
+                },
+
+
+                // legacy
                 new Client
                 {
                     ClientId = "native.hybrid",
