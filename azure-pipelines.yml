@@ -1,0 +1,21 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    packageType: 'sdk'
+    useGlobalJson: true
+- script: dotnet publish Sandbox.sln -c Release -o publish
+  displayName: 'build and publish'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'leastprivilege(b4f1893e-53e4-474d-aee5-7c0db5668eee)'
+    appType: 'webApp'
+    WebAppName: 'identityserver4demo'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
