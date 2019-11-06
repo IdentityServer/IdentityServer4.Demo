@@ -22,7 +22,11 @@ namespace IdentityServer4Demo
                 new ApiResource("api", "Demo API")
                 {
                     ApiSecrets = { new Secret("secret".Sha256()) }
-                }
+                },
+
+                // PolicyServer demo
+                new ApiResource("policyserver.runtime"),
+                new ApiResource("policyserver.management")
             };
         }
 
