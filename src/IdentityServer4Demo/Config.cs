@@ -41,7 +41,7 @@ namespace IdentityServer4Demo
                     ClientSecrets = { new Secret("secret".Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api" },
+                    AllowedScopes = { "api", "policyserver.runtime", "policyserver.management" },
                 },
                 new Client
                 {
