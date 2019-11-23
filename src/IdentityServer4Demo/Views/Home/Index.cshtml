@@ -33,57 +33,18 @@
     <div class="row">
         <div class="col-sm-8">
             <p>
-                <b>client id: m2m</b> <br />
+                <b>GitHub.RabbitMq.ManagementWebsite.Local</b> <br />
+                grant type: implicit <br />
+                client secret: secret <br />
+                access token lifetime: 15 minutes (900 seconds)<br />
+                allowed scopes: rabbitmq.managementwebsite
+            </p>
+            <p>
+                <b>client id: RabbitMq.ReadWriteAll</b> <br />
                 grant type: client credentials <br />
                 client secret: secret <br />
-                access token lifetime: 60 minutes<br />
-                allowed scopes: api
-            </p>
-            <p>
-                <b>client id: m2m.short</b> <br />
-                grant type: client credentials <br />
-                client secret: secret <br />
-                access token lifetime: 75 seconds<br />
-                allowed scopes: api
-            </p>
-
-            <p>
-                <b>client id: interactive.confidential</b> <br />
-                grant type: authorization code with PKCE and client credentials<br />
-                client secret: secret <br />
-                access token lifetime: 60 minutues<br />
-                allowed scopes: openid profile email api offline_access
-            </p>
-            <p>
-                <b>client id: interactive.confidential.short</b> <br />
-                grant type: authorization code with PKCE and client credentials<br />
-                client secret: secret <br />
-                access token lifetime: 75 seconds<br />
-                allowed scopes: openid profile email api offline_access
-            </p>
-
-            <p>
-                <b>client id: interactive.public</b> <br />
-                grant type: authorization code with PKCE and client credentials<br />
-                access token lifetime: 60 minutues<br />
-                allowed scopes: openid profile email api offline_access
-            </p>
-            <p>
-                <b>client id: interactive.public.short</b> <br />
-                grant type: authorization code with PKCE and client credentials<br />
-                access token lifetime: 75 seconds<br />
-                allowed scopes: openid profile email api offline_access
-            </p>
-
-            <p>
-                <b>client id: device</b> <br />
-                grant type: urn:ietf:params:oauth:grant-type:device_code <br />
-                access token lifetime: 60 minutues<br />
-                allowed scopes: openid profile email api
-            </p>
-
-            <p>
-                You can call a test API at https://demo.identityserver.io/api/test.
+                access token lifetime: 1 hour (3600 seconds)<br />
+                allowed scopes: rabbitmq.configure:*/* rabbitmq.read:*/* rabbitmq.write:*/*
             </p>
         </div>
     </div>

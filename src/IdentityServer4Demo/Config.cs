@@ -1,17 +1,38 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using System.Collections.Generic;
 
 namespace IdentityServer4Demo
 {
     public class Config
     {
+        private static string ClientSecret { get; } = "secret"; 
+        
+        private static readonly string RabbitResourceServerId = "rabbitmq";
+        private static readonly string Rabbit_ManagementWebsite_Scope = $"{RabbitResourceServerId}.managementwebsite";
+        private static readonly string Rabbit_Configure_All_Scope = $"{RabbitResourceServerId}.configure:*/*";
+        private static readonly string Rabbit_Read_All_Scope = $"{RabbitResourceServerId}.read:*/*";
+        private static readonly string Rabbit_Write_All_Scope = $"{RabbitResourceServerId}.write:*/*";
+
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email(),
+                new IdentityResources.Email(),                
+                new IdentityResource
+                {
+                    Name = "names",
+                    UserClaims = {"name"},
+                    DisplayName = "Access to user names"
+                },
+                new IdentityResource
+                {
+                    Name = "roles",
+                    UserClaims = {"role"},
+                    DisplayName = "Access to user roles"
+                }
             };
         }
 
@@ -26,7 +47,23 @@ namespace IdentityServer4Demo
 
                 // PolicyServer demo
                 new ApiResource("policyserver.runtime"),
-                new ApiResource("policyserver.management")
+                new ApiResource("policyserver.management"),
+
+
+                new ApiResource("rabbitmq")
+                {
+                    UserClaims = new [] { "names", "roles", "openid"},
+                    ApiSecrets = {
+                        new Secret(ClientSecret.Sha256())
+                    },
+                    Scopes =
+                    {
+                        new Scope(Rabbit_ManagementWebsite_Scope),
+                        new Scope(Rabbit_Configure_All_Scope),
+                        new Scope(Rabbit_Read_All_Scope),
+                        new Scope(Rabbit_Write_All_Scope),
+                    }
+                }
             };
         }
 
@@ -34,319 +71,99 @@ namespace IdentityServer4Demo
         {
             return new List<Client>
             {
-                new Client
-                {
-                    ClientId = "m2m",
-                    ClientName = "Machine to machine (client credentials)",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api", "policyserver.runtime", "policyserver.management" },
-                },
-                new Client
-                {
-                    ClientId = "m2m.short",
-                    ClientName = "Machine to machine with short access token lifetime (client credentials)",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api" },
-                    AccessTokenLifetime = 75
-                },
+                #region RabbitMq_ManagementWebsite
 
                 new Client
                 {
-                    ClientId = "interactive.confidential",
-                    ClientName = "Interactive client (Code with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "interactive.confidential.short",
-                    ClientName = "Interactive client with short token lifetime (Code with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse,
-                    AccessTokenLifetime = 75
-                },
-
-                new Client
-                {
-                    ClientId = "interactive.public",
-                    ClientName = "Interactive client (Code with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "interactive.public.short",
-                    ClientName = "Interactive client with short token lifetime (Code with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse,
-                    AccessTokenLifetime = 75
-                },
-
-                new Client
-                {
-                    ClientId = "device",
-                    ClientName = "Device Flow Client",
-
-                    AllowedGrantTypes = GrantTypes.DeviceFlow,
-                    RequireClientSecret = false,
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" }
-                },
-
-
-                // legacy
-                new Client
-                {
-                    ClientId = "native.hybrid",
-                    ClientName = "Native Client (Hybrid with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "server.hybrid",
-                    ClientName = "Server-based Client (Hybrid)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "server.hybrid.short",
-                    ClientName = "Server-based Client (Hybrid)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse,
-                    AccessTokenLifetime = 70,
-                },
-                new Client
-                {
-                    ClientId = "native.code",
-                    ClientName = "Native Client (Code with PKCE)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    RequirePkce = true,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "server.code",
-                    ClientName = "Server Client (Code)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "server.code.short",
-                    ClientName = "Server Client (Code)",
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-                    RequireConsent = false,
-
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse,
-                    AccessTokenLifetime = 70
-                },
-
-                // server to server
-                new Client
-                {
-                    ClientId = "client",
-                    ClientSecrets = { new Secret("secret".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "api" },
-                },
-
-                // SPA per new security guidance
-                new Client
-                {
-                    ClientId = "spa",
-                    ClientName = "SPA (Code + PKCE)",
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.ReUse
-                },
-                new Client
-                {
-                    ClientId = "spa.short",
-                    ClientName = "SPA (Code + PKCE)",
-
-                    RequireClientSecret = false,
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-
-                    AllowOfflineAccess = true,
-                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
-                    AccessTokenLifetime = 70
-                },
-
-                // implicit (e.g. SPA or OIDC authentication)
-                new Client
-                {
-                    ClientId = "implicit",
+                    ClientId = $"GitHub.RabbitMq.ManagementWebsite.Local",
                     ClientName = "Implicit Client",
+                    ClientSecrets = new [] { new Secret(ClientSecret.Sha256()) },
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
                     AllowAccessTokensViaBrowser = true,
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-                    FrontChannelLogoutUri = "http://localhost:5000/signout-idsrv", // for testing identityserver on localhost
-
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowOfflineAccess = true,
+                    RequireConsent = true,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = 900,
+                    RedirectUris =
+                        GetRedirectUris("localhost", 15672),
+                    PostLogoutRedirectUris =
+                        GetPostLogoutRedirectUris("localhost", 15672),
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "names",
+                        "roles",
+                        "offline_access",
+                        Rabbit_ManagementWebsite_Scope },
                 },
 
-                // implicit using reference tokens (e.g. SPA or OIDC authentication)
-                new Client
+                #endregion
+
+                #region RabbitMq_Maintanance
+
+                new Client()
                 {
-                    ClientId = "implicit.reference",
-                    ClientName = "Implicit Client using reference tokens",
+                    ClientId = $"RabbitMq.ReadWriteAll",
+                    ClientName = $"RabbitMq.Maintanance",
+                    ClientSecrets = new [] { new Secret(ClientSecret.Sha256()) },
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AccessTokenLifetime = 3600,
+                    IdentityTokenLifetime = 3600,
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowAccessTokensViaBrowser = true,
-
-                    AccessTokenType = AccessTokenType.Reference,
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
-
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
+                    AlwaysSendClientClaims = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AllowOfflineAccess = true,
+                    RequireConsent = true,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = 3600,
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        "names",
+                        "roles",
+                        "offline_access",
+                        Rabbit_Configure_All_Scope,
+                        Rabbit_Read_All_Scope,
+                        Rabbit_Write_All_Scope,
+                    }
                 },
 
-                // implicit using reference tokens (e.g. SPA or OIDC authentication)
-                new Client
-                {
-                    ClientId = "implicit.shortlived",
-                    ClientName = "Implicit Client using short-lived tokens",
-                    AllowAccessTokensViaBrowser = true,
+                #endregion
 
-                    AccessTokenLifetime = 70,
-                    RequireConsent = false,
+            };
+        }
+        private static string GetHostName(
+            string environment, int servicePortNumber)
+        {
+            return $"{environment}:{servicePortNumber}";
+        }
 
-                    RedirectUris = { "https://notused" },
-                    PostLogoutRedirectUris = { "https://notused" },
+        private static ICollection<string> GetRedirectUris(
+            string environment, int localPortNumber)
+        {
+            return new List<string>()
+            {
+                $"http://{GetHostName(environment, localPortNumber)}/postaccess.html",
+                $"http://{GetHostName(environment, localPortNumber)}/callback.html",
+                $"http://{GetHostName(environment, localPortNumber)}/silent.html",
+            };
+        }
 
-                    AllowedGrantTypes = GrantTypes.Implicit,
-                    AllowedScopes = { "openid", "profile", "email", "api" },
-                },
+        private static ICollection<string>  GetPostLogoutRedirectUris(
+            string environment, int localPortNumber)
+        {
+            return new List<string>()
+            {
+                $"http://{GetHostName(environment, localPortNumber)}/index.html",
             };
         }
     }

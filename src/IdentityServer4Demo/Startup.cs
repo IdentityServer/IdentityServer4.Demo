@@ -30,46 +30,11 @@ namespace IdentityServer4Demo
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
             })
-                .AddInMemoryApiResources(Config.GetApis())
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryClients(Config.GetClients())
-                .AddTestUsers(TestUsers.Users)
-                .AddDeveloperSigningCredential(persistKey: false);
-
-            services.AddAuthentication()
-                .AddGoogle("Google", options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                    options.ClientId = Configuration["Secret:GoogleClientId"];
-                    options.ClientSecret = Configuration["Secret:GoogleClientSecret"];
-                })
-                .AddOpenIdConnect("aad", "Sign-in with Azure AD", options =>
-                {
-                    options.Authority = "https://login.microsoftonline.com/common";
-                    options.ClientId = "https://leastprivilegelabs.onmicrosoft.com/38196330-e766-4051-ad10-14596c7e97d3";
-
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-
-                    options.ResponseType = "id_token";
-                    options.CallbackPath = "/signin-aad";
-                    options.SignedOutCallbackPath = "/signout-callback-aad";
-                    options.RemoteSignOutPath = "/signout-aad";
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidAudience = "165b99fd-195f-4d93-a111-3e679246e6a9",
-
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
-                })
-                .AddLocalApi(options =>
-                {
-                    options.ExpectedScope = "api";
-                });
+            .AddInMemoryApiResources(Config.GetApis())
+            .AddInMemoryIdentityResources(Config.GetIdentityResources())
+            .AddInMemoryClients(Config.GetClients())
+            .AddTestUsers(TestUsers.Users)
+            .AddDeveloperSigningCredential(persistKey: false);
 
             // preserve OIDC state in cache (solves problems with AAD and URL lenghts)
             services.AddOidcStateDataFormatterCache("aad");

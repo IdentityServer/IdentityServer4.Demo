@@ -45,14 +45,14 @@ namespace IdentityServer4Demo
                             flushToDiskInterval: TimeSpan.FromSeconds(1));
                     }
                 })
-                .ConfigureAppConfiguration((ctx, builder) =>
-                {
-                    var config = builder.Build();
-                    var tokenProvider = new AzureServiceTokenProvider();
-                    var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
+                //.ConfigureAppConfiguration((ctx, builder) =>
+                //{
+                //    var config = builder.Build();
+                //    var tokenProvider = new AzureServiceTokenProvider();
+                //    var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
 
-                    builder.AddAzureKeyVault(config["KeyVault:BaseUrl"], kvClient, new DefaultKeyVaultSecretManager());
-                })
+                //    builder.AddAzureKeyVault(config["KeyVault:BaseUrl"], kvClient, new DefaultKeyVaultSecretManager());
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
