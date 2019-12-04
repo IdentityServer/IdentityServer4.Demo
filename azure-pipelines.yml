@@ -10,7 +10,7 @@ steps:
   inputs:
     packageType: 'sdk'
     useGlobalJson: true
-- script: dotnet publish IdentityServer4Demo.sln -c Release --self-contained -r win-x64 -o publish
+- script: dotnet publish IdentityServer4Demo.sln -c Release --self-contained -r win-x86 -o publish
   displayName: 'build and publish'
 - task: AzureRmWebAppDeployment@4
   inputs:
