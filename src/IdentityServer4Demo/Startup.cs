@@ -22,6 +22,9 @@ namespace IdentityServer4Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
+            // cookie policy to deal with temporary browser incompatibilities
+            services.AddSameSiteCookiePolicy();
 
             services.AddIdentityServer(options =>
             {
@@ -90,6 +93,7 @@ namespace IdentityServer4Demo
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseCookiePolicy();
             app.UseSerilogRequestLogging();
             app.UseDeveloperExceptionPage();
 
