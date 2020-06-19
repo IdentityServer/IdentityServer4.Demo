@@ -1,4 +1,4 @@
-@using System.Diagnostics
+﻿@using System.Diagnostics
 
 @{
     var version = FileVersionInfo.GetVersionInfo(typeof(IdentityServer4.Hosting.IdentityServerMiddleware).Assembly.Location).ProductVersion.Split('+').First();
@@ -29,4 +29,57 @@
             and <a href="https://github.com/IdentityServer/IdentityServer4/tree/main/samples">ready to use samples</a>.
         </li>
     </ul>
+
+    <ul>
+        <li>
+            <b>client id: m2m</b> <br/>
+            grant type: client credentials <br/>
+            client secret: secret <br/>
+            access token lifetime: 60 minutes<br/>
+            allowed scopes: api
+        </li>
+        <li>
+            <b>client id: m2m.short</b> <br/>
+            grant type: client credentials <br/>
+            client secret: secret <br/>
+            access token lifetime: 75 seconds<br/>
+            allowed scopes: api
+        </li>
+        <li>
+            <b>client id: interactive.confidential</b> <br/>
+            grant type: authorization code with PKCE and client credentials<br/>
+            client secret: secret <br/>
+            access token lifetime: 60 minutues<br/>
+            allowed scopes: openid profile email api offline_access
+        </li>
+        <li>
+            <b>client id: interactive.confidential.short</b> <br/>
+            grant type: authorization code with PKCE and client credentials<br/>
+            client secret: secret <br/>
+            access token lifetime: 75 seconds<br/>
+            allowed scopes: openid profile email api offline_access
+        </li>
+        <li>
+            <b>client id: interactive.public</b> <br/>
+            grant type: authorization code with PKCE and client credentials<br/>
+            access token lifetime: 60 minutues<br/>
+            allowed scopes: openid profile email api offline_access
+        </li>
+        <li>
+            <b>client id: interactive.public.short</b> <br/>
+            grant type: authorization code with PKCE and client credentials<br/>
+            access token lifetime: 75 seconds<br/>
+            allowed scopes: openid profile email api offline_access
+        </li>
+        <li>
+            <b>client id: device</b> <br/>
+            grant type: urn:ietf:params:oauth:grant-type:device_code <br/>
+            access token lifetime: 60 minutues<br/>
+            allowed scopes: openid profile email api
+        </li>
+        <li>
+            You can call a test API at https://demo.identityserver.io/api/test.
+        </li>
+    </ul>
+
 </div>
