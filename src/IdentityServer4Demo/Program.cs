@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +21,7 @@ namespace IdentityServer4Demo
 
         public static IHostBuilder BuildWebHostBuilder(string[] args)
         {
-            return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+            return Host.CreateDefaultBuilder(args)
                 .UseSerilog((ctx, config) =>
                 {
                     config.MinimumLevel.Debug()
