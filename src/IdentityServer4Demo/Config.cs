@@ -173,6 +173,18 @@ namespace IdentityServer4Demo
                     RefreshTokenExpiration = TokenExpiration.Sliding,
                     
                     AllowedScopes = { "openid", "profile", "email", "api", "api.scope1", "api.scope2", "scope2" }
+                },
+                
+                // oidc login only
+                new Client
+                {
+                    ClientId = "login",
+                    
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+                    
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = { "openid", "profile", "email" },
                 }
             };
         }
