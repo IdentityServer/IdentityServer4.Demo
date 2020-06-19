@@ -1,7 +1,7 @@
 ﻿using IdentityServer4;
-using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
+using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +33,7 @@ namespace IdentityServer4Demo
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
             })
+                .AddInMemoryApiScopes(Config.GetApiScopes())
                 .AddInMemoryApiResources(Config.GetApis())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
