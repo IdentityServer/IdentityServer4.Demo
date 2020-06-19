@@ -19,3 +19,4 @@ steps:
     appType: 'webApp'
     WebAppName: 'identityserver4demo'
     packageForLinux: '$(System.DefaultWorkingDirectory)/publish'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
