@@ -25,7 +25,6 @@ jobs:
       # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-          dotnet build --configuration Release
           dotnet publish -c Release --self-contained -r win-x86 -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}' 
           
       # Deploy to Azure Web apps
