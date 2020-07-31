@@ -185,6 +185,21 @@ namespace IdentityServer4Demo
                     
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email" },
+                },
+                
+                new Client
+                {
+                    ClientId = "hybrid",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RequirePkce = false,
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    AllowOfflineAccess = true,
+                    AllowedScopes = { "openid", "profile", "email", "api", "api.scope1", "api.scope2", "scope2" }
                 }
             };
         }
