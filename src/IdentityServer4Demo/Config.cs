@@ -44,16 +44,6 @@ namespace IdentityServer4Demo
                     ApiSecrets = { new Secret("secret".Sha256()) },
                     
                     Scopes = { "api", "api.scope1", "api.scope2" }
-                },
-
-                // PolicyServer demo (audience should match scope)
-                new ApiResource("policyserver.runtime")
-                {
-                    Scopes = { "policyserver.runtime" }
-                },
-                new ApiResource("policyserver.management")
-                {
-                    Scopes = { "policyserver.runtime" }
                 }
             };
         }
