@@ -93,6 +93,23 @@ namespace IdentityServer4Demo
                 },
                 new Client
                 {
+                    ClientId = "interactive.confidential.hybrid",
+                    ClientName = "Interactive client (OIDC Hybrid Flow)",
+
+                    RedirectUris = { "https://notused" },
+                    PostLogoutRedirectUris = { "https://notused" },
+
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    AllowedScopes = { "openid", "profile", "email", "api", "api.scope1", "api.scope2", "scope2" },
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse,
+                    RefreshTokenExpiration = TokenExpiration.Sliding
+                },
+                new Client
+                {
                     ClientId = "interactive.confidential.short",
                     ClientName = "Interactive client with short token lifetime (Code with PKCE)",
 
